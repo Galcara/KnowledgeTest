@@ -1,18 +1,26 @@
+using AutoMapper;
+using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ModelViewController.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using ModelViewController.Data;
 
 namespace ModelViewController
 {
     public class Startup
     {
+        public static string UrlBase = "http://localhost:5000/";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -23,7 +31,23 @@ namespace ModelViewController
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc().AddJsonOptions(c => c.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+            services.AddSession();
             services.AddControllersWithViews();
+
+
+
+            var config = new AutoMapper.MapperConfiguration(cfg =>
+            {
+                cfg.CreateMap<Company, CompanyQueryViewModel>();
+
+
+            });
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddDbContext<KnowledgeTestDB>(options =>
+                    options.UseSqlServer(Configuration.GetConnectionString("KnowledgeTestDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
