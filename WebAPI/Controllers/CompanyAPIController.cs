@@ -50,11 +50,22 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
 
-        [Route ("GetByID")]
+        [Route("GetByID")]
         [HttpGet]
         public async Task<IActionResult> GetByID(int id)
         {
             Response response = await _CompanyService.GetByID(id);
+            if (!response.Success)
+            {
+                return NotFound();
+            }
+            return Ok(Response);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int id)
+        {
+            Response response = await _CompanyService.Delete(id);
             if (!response.Success)
             {
                 return NotFound();

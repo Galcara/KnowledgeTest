@@ -1,10 +1,10 @@
-﻿@model IEnumerable<ModelViewController.Models.CompanyQueryViewModel>
+﻿@model IEnumerable<PresentationLayerMVC.Models.CompanyModels.CompanyQueryViewModel>
 
 @{
-    ViewData["Title"] = "CompanyIndex";
+    ViewData["Title"] = "Query";
 }
 
-<h1>CompanyIndex</h1>
+<h1>Query</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,6 +12,9 @@
 <table class="table">
     <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.CommercialName)
             </th>
@@ -21,12 +24,18 @@
             <th>
                 @Html.DisplayNameFor(model => model.CPNJ)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.CommercialName)
             </td>
@@ -37,8 +46,12 @@
                 @Html.DisplayFor(modelItem => item.CPNJ)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                @Html.DisplayFor(modelItem => item.Active)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

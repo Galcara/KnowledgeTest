@@ -18,7 +18,7 @@ namespace BusinessLogicalLayer
         {
             AddError(company.CommercialName.AuthenticateName());
             AddError(company.CPNJ.AuthenticateCNPJ());
-            
+
             return base.Validate(company);
         }
 
@@ -63,7 +63,7 @@ namespace BusinessLogicalLayer
                 return subject;
             }
         }
-        
+
         public async Task<Response> Update(Company company)
         {
             Response Response = Validate(company);
@@ -107,5 +107,23 @@ namespace BusinessLogicalLayer
             }
         }
 
+        public async Task<Response> Delete(int id)
+        {
+            try
+            {
+                Company company = new Company();
+                company.ID = id;
+                using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
+                {
+                    dataBase.Entry(company).State = Microsoft.EntityFrameworkCore.EntityState.Deleted;
+                    await dataBase.SaveChangesAsync();
+                }
+                return ResponseMessage.CreateSuccessResponse();
+            }
+            catch (Exception ex)
+            {
+                return ResponseMessage.CreateErrorResponse(ex);
+            }
+        }
     }
 }

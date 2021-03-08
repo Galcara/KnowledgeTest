@@ -6,16 +6,15 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using ModelViewController.Models;
+using PresentationLayerMVC.Models;
+using PresentationLayerMVC.Models.CompanyModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using ModelViewController.Data;
 
-namespace ModelViewController
+namespace PresentationLayerMVC
 {
     public class Startup
     {
@@ -35,19 +34,16 @@ namespace ModelViewController
             services.AddSession();
             services.AddControllersWithViews();
 
-
-
-            var config = new AutoMapper.MapperConfiguration(cfg =>
+            var config = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<Company, CompanyQueryViewModel>();
+                cfg.CreateMap<CompanyInsertViewModel, Company>();
+                //cfg.CreateMap<Administrator, AdminQueryViewModel>();
+                //cfg.CreateMap<TeacherInsertViewModel, Teacher>().ForMember(c => c.Subjects, c => c.Ignore());
 
 
             });
             IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
-
-            services.AddDbContext<KnowledgeTestDB>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("KnowledgeTestDB")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +59,8 @@ namespace ModelViewController
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
