@@ -92,12 +92,12 @@ namespace BusinessLogicalLayer
             {
                 using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
                 {
-                    Company company = await dataBase.Companies.FirstOrDefaultAsync(p => p.ID == id);
+                    Company company = await dataBase.Companies.Include(p => p.Supplier).FirstOrDefaultAsync(p => p.ID == id);
                     if (company == null)
                     {
-                        return ResponseMessage.SingleSuccessResponse<Company>(company);
+                        return ResponseMessage.NotFoundData<Company>();
                     }
-                    return ResponseMessage.NotFoundData<Company>();
+                    return ResponseMessage.SingleSuccessResponse<Company>(company);
                 }
             }
             catch (Exception ex)

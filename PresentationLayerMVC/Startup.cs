@@ -1,4 +1,6 @@
 using AutoMapper;
+using BusinessLogicalLayer;
+using BusinessLogicalLayer.Interfaces;
 using Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +39,9 @@ namespace PresentationLayerMVC
             var config = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<CompanyInsertViewModel, Company>();
+                cfg.CreateMap<Company, CompanyQueryViewModel>();
+                cfg.CreateMap<CompanyUpdateViewModel, Company>();
+                cfg.CreateMap<CompanyQueryViewModel, CompanyUpdateViewModel>();
                 //cfg.CreateMap<Administrator, AdminQueryViewModel>();
                 //cfg.CreateMap<TeacherInsertViewModel, Teacher>().ForMember(c => c.Subjects, c => c.Ignore());
 

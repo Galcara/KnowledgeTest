@@ -27,7 +27,8 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
 
-        [HttpPut]
+        [Route("Update")]
+        [HttpPost]
         public async Task<IActionResult> Update (Company company)
         {
             Response response = await _CompanyService.Update(company);
@@ -40,7 +41,7 @@ namespace WebAPI.Controllers
 
         [Route("GetActives")]
         [HttpGet]
-        public async Task<IActionResult> GetAllActives(Company company)
+        public async Task<IActionResult> GetAllActives()
         {
             Response response = await _CompanyService.GetAll();
             if (!response.Success)
@@ -50,16 +51,16 @@ namespace WebAPI.Controllers
             return Ok(response);
         }
 
-        [Route("GetByID")]
+        [Route("Detail")]
         [HttpGet]
         public async Task<IActionResult> GetByID(int id)
         {
-            Response response = await _CompanyService.GetByID(id);
+            SingleResponse<Company> response = await _CompanyService.GetByID(id);
             if (!response.Success)
             {
                 return NotFound();
             }
-            return Ok(Response);
+            return Ok(response);
         }
 
         [HttpDelete]
@@ -70,7 +71,7 @@ namespace WebAPI.Controllers
             {
                 return NotFound();
             }
-            return Ok(Response);
+            return Ok(response);
         }
     }
 }
