@@ -118,6 +118,18 @@ namespace BusinessLogicalLayer
             }
             return "Email inválido";
         }
+        public static string AuthenticateRG(this string rg)
+        {
+            if (string.IsNullOrWhiteSpace(rg))
+            {
+                return "RG inválido.";
+            }
+            if (rg.Length >= 7 && rg.Length <= 14)
+            {
+                return "";
+            }
+            return "RG inválido.";
+        }
         public static string RemoveMask(this string masked)
         {
             masked = masked.Replace(".", "").Replace("-", "").Replace("/", "");
