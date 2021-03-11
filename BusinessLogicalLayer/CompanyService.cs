@@ -59,8 +59,8 @@ namespace BusinessLogicalLayer
             }
             catch (Exception ex)
             {
-                QueryResponse<Company> subject = (QueryResponse<Company>)ResponseMessage.QueryErrorResponse<Company>(ex);
-                return subject;
+                QueryResponse<Company> companies = (QueryResponse<Company>)ResponseMessage.QueryErrorResponse<Company>(ex);
+                return companies;
             }
         }
 
