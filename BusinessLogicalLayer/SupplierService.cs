@@ -109,8 +109,7 @@ namespace BusinessLogicalLayer
             }
             catch (Exception ex)
             {
-                QueryResponse<Supplier> supplier = ResponseMessage.QueryErrorResponse<Supplier>(ex);
-                return supplier;
+                return ResponseMessage.QueryErrorResponse<Supplier>(ex);
             }
         }
 
@@ -176,5 +175,64 @@ namespace BusinessLogicalLayer
             }
         }
 
+        public async Task<QueryResponse<Supplier>> GetByName(string name)
+        {
+            try
+            {
+                using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
+                {
+                    List<Supplier> supplier = await dataBase.Suppliers.Include(p => p.Companies).Where(p=>p.Active == true).Where(p => p.PersonResponsible == name).ToListAsync();
+                    if (supplier == null)
+                    {
+                        return ResponseMessage.QueryErrorResponse<Supplier>(null);
+                    }
+                    return ResponseMessage.QuerySuccessResponse(supplier);
+                }
+            }
+            catch (Exception ex)
+            {
+                return ResponseMessage.QueryErrorResponse<Supplier>(ex);
+            }
+        }
+
+        public async Task<QueryResponse<Supplier>> GetByCpfOrCnpj(string cpfOuCnpj)
+        {
+            try
+            {
+                using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
+                {
+                    List<Supplier> supplier = await dataBase.Suppliers.Include(p => p.Companies).Where(p => p.Active == true).Where(p => p.CNPJ_CPF == cpfOuCnpj).ToListAsync();
+                    if (supplier == null)
+                    {
+                        return ResponseMessage.QueryErrorResponse<Supplier>(null);
+                    }
+                    return ResponseMessage.QuerySuccessResponse(supplier);
+                }
+            }
+            catch (Exception ex)
+            {
+                return ResponseMessage.QueryErrorResponse<Supplier>(ex);
+            }
+        }
+
+        public async Task<QueryResponse<Supplier>> GetByRegisterDate(DateTime dateTime)
+        {
+            try
+            {
+                using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
+                {
+                    List<Supplier> supplier = await dataBase.Suppliers.Include(p => p.Companies).Where(p => p.Active == true).Where(p => p.DateRegistration == dateTime).ToListAsync();
+                    if (supplier == null)
+                    {
+                        return ResponseMessage.QueryErrorResponse<Supplier>(null);
+                    }
+                    return ResponseMessage.QuerySuccessResponse(supplier);
+                }
+            }
+            catch (Exception ex)
+            {
+                return ResponseMessage.QueryErrorResponse<Supplier>(ex);
+            }
+        }
     }
 }
