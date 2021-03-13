@@ -181,7 +181,7 @@ namespace BusinessLogicalLayer
             {
                 using (KnowledgeTestDB dataBase = new KnowledgeTestDB())
                 {
-                    List<Supplier> supplier = await dataBase.Suppliers.Include(p => p.Companies).Where(p=>p.Active == true).Where(p => p.PersonResponsible == name).ToListAsync();
+                    List<Supplier> supplier = await dataBase.Suppliers.Include(p => p.Companies).Where(p=>p.Active == true).Where(p => p.PersonResponsible.Contains(name)).ToListAsync();
                     if (supplier == null)
                     {
                         return ResponseMessage.QueryErrorResponse<Supplier>(null);

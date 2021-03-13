@@ -29,7 +29,7 @@ namespace WebAPI.Controllers
 
         [Route("Update")]
         [HttpPost]
-        public async Task<IActionResult> Update (Company company)
+        public async Task<IActionResult> Update(Company company)
         {
             Response response = await _CompanyService.Update(company);
             if (!response.Success)
@@ -43,7 +43,7 @@ namespace WebAPI.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllActives()
         {
-            Response response = await _CompanyService.GetAll();
+            QueryResponse<Company> response = await _CompanyService.GetAll();
             if (!response.Success)
             {
                 return NotFound();
