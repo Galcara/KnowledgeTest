@@ -1,0 +1,63 @@
+﻿@model PresentationLayerMVC.Models.SupplierModels.SupplierCpfUpdateViewModel
+
+@{
+    ViewData["Title"] = "EditCPF";
+}
+
+<h1>EditCPF</h1>
+
+<h4>SupplierCpfUpdateViewModel</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="EditCPF">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="PersonResponsible" class="control-label"></label>
+                <input asp-for="PersonResponsible" class="form-control" />
+                <span asp-validation-for="PersonResponsible" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CNPJ_CPF" class="control-label"></label>
+                <input asp-for="CNPJ_CPF" class="form-control" />
+                <span asp-validation-for="CNPJ_CPF" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="RG" class="control-label"></label>
+                <input asp-for="RG" class="form-control" />
+                <span asp-validation-for="RG" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BirthDate" class="control-label"></label>
+                <input asp-for="BirthDate" class="form-control" />
+                <span asp-validation-for="BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telephone" class="control-label"></label>
+                <input asp-for="Telephone" class="form-control" />
+                <span asp-validation-for="Telephone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telephone2" class="control-label"></label>
+                <input asp-for="Telephone2" class="form-control" />
+                <span asp-validation-for="Telephone2" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar aos fornecedores</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
