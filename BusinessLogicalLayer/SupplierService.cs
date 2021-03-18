@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLogicalLayer
 {
-    class SupplierService : BaseValidator<Supplier>, ISupplierService
+    public class SupplierService : BaseValidator<Supplier>, ISupplierService
     {
         public override Response Validate(Supplier supplier)
         {

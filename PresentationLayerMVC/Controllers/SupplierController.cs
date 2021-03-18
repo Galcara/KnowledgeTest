@@ -29,12 +29,12 @@ namespace PresentationLayerMVC.Controllers
 
         }
 
-        public async Task<IActionResult> Create()
+        public async Task<IActionResult> CreateCPF()
         {
             using (HttpClient client = new HttpClient())
             {
 
-                HttpResponseMessage responseMessage = await client.GetAsync(Startup.UrlBase + "CompanyAPI");
+                HttpResponseMessage responseMessage = await client.GetAsync(Startup.UrlBase + "CompanyAPI/GetActives");
                 string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
                 QueryResponse<Company> response = JsonConvert.DeserializeObject<QueryResponse<Company>>(jsonResponse);
                 if (!response.Success)
@@ -47,9 +47,10 @@ namespace PresentationLayerMVC.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(SupplierCpfInsertViewModel viewModel)
+        public async Task<IActionResult> CreateCPF(SupplierCpfInsertViewModel viewModel)
         {
             Supplier supplier = _mapper.Map<Supplier>(viewModel);
+            viewModel.Companies.ForEach(c => supplier.Companies.Add(new Company() { ID = c }));
 
             using (HttpClient client = new HttpClient())
             {
@@ -62,6 +63,75 @@ namespace PresentationLayerMVC.Controllers
                     return RedirectToAction("Index");
                 }
                 ViewBag.Erros = response.Message;
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(Startup.UrlBase + "SupplierAPI/GetActives");
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string supplierJsonResponse = await response.Content.ReadAsStringAsync();
+                    QueryResponse<Supplier> supplierResponse = JsonConvert.DeserializeObject<QueryResponse<Supplier>>(supplierJsonResponse);
+                    return View(_mapper.Map<List<SupplierQueryViewModel>>(supplierResponse.Data));
+                }
+                ViewBag.Errors = "Dados não encontrados.";
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> EditCPF(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(Startup.UrlBase + "SupplierAPI/Detail/?id=" + id);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string supplierJsonResponse = await response.Content.ReadAsStringAsync();
+                    SingleResponse<Supplier> supplierResponse = JsonConvert.DeserializeObject<SingleResponse<Supplier>>(supplierJsonResponse);
+                    SupplierQueryViewModel viewModel = _mapper.Map<SupplierQueryViewModel>(supplierResponse.Data);
+                    return View(_mapper.Map<SupplierCpfUpdateViewModel>(viewModel));
+                }
+                ViewBag.Errors = "Dados não encontrados.";
+                return View();
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditCPF(SupplierCpfUpdateViewModel viewModel)
+        {
+            Supplier supplier = _mapper.Map<Supplier>(viewModel);
+
+            using (HttpClient client = new HttpClient())
+            {
+                StringContent content = new StringContent(JsonConvert.SerializeObject(supplier), Encoding.UTF8, "application/json");
+                HttpResponseMessage responseMessage = await client.PostAsync(Startup.UrlBase + "SupplierAPI/Update", content);
+                string jsonResponse = await responseMessage.Content.ReadAsStringAsync();
+                Response response = JsonConvert.DeserializeObject<Response>(jsonResponse);
+                if (response.Success)
+                {
+                    return RedirectToAction("Index");
+                }
+                ViewBag.Erros = response.Message;
+                return View();
+            }
+        }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                HttpResponseMessage response = await client.GetAsync(Startup.UrlBase + "Supplier/Detail/?id=" + id);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    string companyJsonResponse = await response.Content.ReadAsStringAsync();
+                    SingleResponse<Supplier> companyResponse = JsonConvert.DeserializeObject<SingleResponse<Supplier>>(companyJsonResponse);
+                    return View(_mapper.Map<SupplierCpfUpdateViewModel>(companyResponse.Data));
+                }
+                ViewBag.Errors = "Dados não encontrados.";
                 return View();
             }
         }
@@ -103,37 +173,8 @@ namespace PresentationLayerMVC.Controllers
             }
         }
 
-        public async Task<IActionResult> Index()
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(Startup.UrlBase + "CompanyAPI/GetActives");
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string companyJsonResponse = await response.Content.ReadAsStringAsync();
-                    QueryResponse<Company> companyResponse = JsonConvert.DeserializeObject<QueryResponse<Company>>(companyJsonResponse);
-                    return View(_mapper.Map<List<CompanyQueryViewModel>>(companyResponse.Data));
-                }
-                ViewBag.Errors = "Dados não encontrados.";
-                return View();
-            }
-        }
 
-        public async Task<IActionResult> Details(int id)
-        {
-            using (HttpClient client = new HttpClient())
-            {
-                HttpResponseMessage response = await client.GetAsync(Startup.UrlBase + "CompanyAPI/Detail/?id=" + id);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string companyJsonResponse = await response.Content.ReadAsStringAsync();
-                    SingleResponse<Company> companyResponse = JsonConvert.DeserializeObject<SingleResponse<Company>>(companyJsonResponse);
-                    return View(_mapper.Map<CompanyQueryViewModel>(companyResponse.Data));
-                }
-                ViewBag.Errors = "Dados não encontrados.";
-                return View();
-            }
-        }
+        
 
         public IActionResult Privacy()
         {

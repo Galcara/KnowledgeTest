@@ -7,7 +7,7 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="CreateCPF">Cadastrar novo fornecedor</a>
 </p>
 <table class="table">
     <thead>
@@ -31,28 +31,35 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.ID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PersonResponsible)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CNPJ_CPF)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telephone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Active)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) 
-            </td>
-        </tr>
-}
-    </tbody>
+        @if (Model == null)
+        {
+
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PersonResponsible)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNPJ_CPF)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telephone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Active)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Details", "Details", new { id = item.ID })
+                    </td>
+                </tr>
+            }
+        }
+        </tbody>
 </table>

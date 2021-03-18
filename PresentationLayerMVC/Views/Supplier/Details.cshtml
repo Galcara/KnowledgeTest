@@ -1,0 +1,82 @@
+﻿@model PresentationLayerMVC.Models.SupplierModels.SupplierDetailViewModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalhes</h1>
+
+<div>
+    <h4>Detalhes do fornecedor</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ID)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ID)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.PersonResponsible)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.PersonResponsible)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CNPJ_CPF)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CNPJ_CPF)
+        </dd>
+
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.DateRegistration)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DateRegistration)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telephone)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telephone)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Telephone2)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Telephone2)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Active)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Active)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RG)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    @{ string route = "";}
+    @if (Model.RG != null)
+    {//Esse if esta bugando, verificar erros.
+        route = "EditCPF";
+    }
+    else
+    {
+        route = "EditCNPJ";
+    }
+    @Html.ActionLink(route, route, new { id = Model.ID }) |
+    <a asp-action="Index">Voltar a lista de fornecedores</a>
+</div>

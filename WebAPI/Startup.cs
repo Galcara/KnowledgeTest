@@ -40,6 +40,7 @@ namespace WebAPI
             });
 
             services.AddTransient<ICompanyService, CompanyService>();
+            services.AddTransient<ISupplierService, SupplierService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

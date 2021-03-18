@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using PresentationLayerMVC.Models;
 using PresentationLayerMVC.Models.CompanyModels;
+using PresentationLayerMVC.Models.SupplierModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,6 +43,11 @@ namespace PresentationLayerMVC
                 cfg.CreateMap<Company, CompanyQueryViewModel>();
                 cfg.CreateMap<CompanyUpdateViewModel, Company>();
                 cfg.CreateMap<CompanyQueryViewModel, CompanyUpdateViewModel>();
+
+                cfg.CreateMap<SupplierCpfInsertViewModel, Supplier>().ForMember(c => c.Companies, c => c.Ignore());
+                cfg.CreateMap<Supplier, SupplierQueryViewModel>();
+                cfg.CreateMap<SupplierCpfUpdateViewModel, Company>();
+                cfg.CreateMap<SupplierDetailViewModel, SupplierCpfUpdateViewModel>();
                 //cfg.CreateMap<Administrator, AdminQueryViewModel>();
                 //cfg.CreateMap<TeacherInsertViewModel, Teacher>().ForMember(c => c.Subjects, c => c.Ignore());
 

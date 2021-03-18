@@ -36,8 +36,8 @@ namespace PresentationLayerMVC.Models.SupplierModels
         [DisplayName("Telefone")]
         public string Telephone2 { get; set; }
 
-        [DisplayName("Matéria")]
-        [Required(ErrorMessage = "Selecione uma matéria")]
+        [DisplayName("Empresas")]
+        [Required(ErrorMessage = "Selecione a Empresa fornecida")]
         public List<int> Companies { get; set; }
     }
 }
