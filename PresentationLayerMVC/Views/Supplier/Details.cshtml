@@ -28,7 +28,6 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CNPJ_CPF)
         </dd>
-
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DateRegistration)
         </dt>
@@ -68,15 +67,18 @@
     </dl>
 </div>
 <div>
-    @{ string route = "";}
-    @if (Model.RG != null)
-    {//Esse if esta bugando, verificar erros.
-        route = "EditCPF";
+    @{ string route = "";
+       string rg = "1";
+       //Ainda bugado
+        @if (!string.IsNullOrWhiteSpace(rg))
+        {
+            route = "EditCPF";
+        }
+        else
+        {
+            route = "EditCNPJ";
+        }
+        Html.ActionLink(route, route, new { id = Model.ID }); 
     }
-    else
-    {
-        route = "EditCNPJ";
-    }
-    @Html.ActionLink(route, route, new { id = Model.ID }) |
     <a asp-action="Index">Voltar a lista de fornecedores</a>
 </div>

@@ -128,8 +128,8 @@ namespace PresentationLayerMVC.Controllers
                 if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 {
                     string companyJsonResponse = await response.Content.ReadAsStringAsync();
-                    SingleResponse<Supplier> companyResponse = JsonConvert.DeserializeObject<SingleResponse<Supplier>>(companyJsonResponse);
-                    return View(_mapper.Map<SupplierCpfUpdateViewModel>(companyResponse.Data));
+                    SingleResponse<Supplier> supplierResponse = JsonConvert.DeserializeObject<SingleResponse<Supplier>>(companyJsonResponse);
+                    return View(_mapper.Map<SupplierDetailViewModel>(supplierResponse.Data));
                 }
                 ViewBag.Errors = "Dados não encontrados.";
                 return View();
@@ -173,8 +173,6 @@ namespace PresentationLayerMVC.Controllers
             }
         }
 
-
-        
 
         public IActionResult Privacy()
         {
