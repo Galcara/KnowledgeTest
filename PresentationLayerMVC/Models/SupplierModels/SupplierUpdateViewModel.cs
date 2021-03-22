@@ -1,5 +1,4 @@
-﻿using Entities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -7,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace PresentationLayerMVC.Models.SupplierModels
 {
-    public class SupplierDetailViewModel
+    public class SupplierUpdateViewModel
     {
-        
-        public int ID { get; set; }
-
         [DisplayName("Nome Responsavel")]
         public string PersonResponsible { get; set; }
 
-        [DisplayName("CPF")]
+        [DisplayName("CPF/CNPJ")]
         public string CNPJ_CPF { get; set; }
 
         public string RG { get; set; }
@@ -34,8 +30,5 @@ namespace PresentationLayerMVC.Models.SupplierModels
 
         [DisplayName("Ativo")]
         public bool Active { get; set; }
-
-        [DisplayName("Empresas")]
-        public virtual ICollection<Company> Companies { get; set; }
     }
 }

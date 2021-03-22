@@ -22,13 +22,19 @@ namespace BusinessLogicalLayer
             {
                 AddError(supplier.Telephone2.AuthenticatePhoneNumber());
             }
+
+            //Remove as mascaras (Caso haja alguma)
             supplier.CNPJ_CPF = supplier.CNPJ_CPF.RemoveMask();
+
             // Verifica se é CPF ou CNPJ pelo tamanho e roda a validação especifica de cada
             if (supplier.CNPJ_CPF.Length == 11)
             {
+                //Validação dos dados de pessao fisica
                 AddError(supplier.CNPJ_CPF.AuthenticateCPF());
                 AddError(supplier.RG.AuthenticateRG());
                 int baseyear = DateTime.Now.Year - 18;
+
+                //Se for CPF verifica que o estado da empresa e se for Paraná, verifica se o responsavel é maior de idade
                 foreach (Company item in supplier.Companies)
                 {
                     if (item.State == Entities.Enums.UF.PR)

@@ -1,13 +1,13 @@
-﻿@model PresentationLayerMVC.Models.SupplierModels.SupplierDetailViewModel
+﻿@model PresentationLayerMVC.Models.SupplierModels.SupplierQueryViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-<h1>Detalhes</h1>
+<h1>Detail</h1>
 
 <div>
-    <h4>Detalhes do fornecedor</h4>
+    <h4>SupplierQueryViewModel</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -27,6 +27,18 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.CNPJ_CPF)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.RG)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.RG)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.DateRegistration)
@@ -53,32 +65,20 @@
             @Html.DisplayFor(model => model.Active)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.RG)
+            @Html.DisplayNameFor(model => model.Companies)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.RG)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BirthDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
+            @{
+                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                foreach (var item in Model.Companies)
+                {
+                    builder.AppendLine(item.CommercialName);
+                }
+                <span class="col-sm-10">@builder.ToString()</span>
+            }
     </dl>
 </div>
 <div>
-    @{ string route = "";
-       string rg = "1";
-       //Ainda bugado
-        @if (!string.IsNullOrWhiteSpace(rg))
-        {
-            route = "EditCPF";
-        }
-        else
-        {
-            route = "EditCNPJ";
-        }
-        Html.ActionLink(route, route, new { id = Model.ID }); 
-    }
-    <a asp-action="Index">Voltar a lista de fornecedores</a>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
 </div>

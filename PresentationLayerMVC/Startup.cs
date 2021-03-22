@@ -46,11 +46,9 @@ namespace PresentationLayerMVC
 
                 cfg.CreateMap<SupplierCpfInsertViewModel, Supplier>().ForMember(c => c.Companies, c => c.Ignore());
                 cfg.CreateMap<Supplier, SupplierQueryViewModel>();
-                cfg.CreateMap<SupplierCpfUpdateViewModel, Company>();
-                cfg.CreateMap<SupplierDetailViewModel, SupplierCpfUpdateViewModel>();
+
                 //cfg.CreateMap<Administrator, AdminQueryViewModel>();
                 //cfg.CreateMap<TeacherInsertViewModel, Teacher>().ForMember(c => c.Subjects, c => c.Ignore());
-
 
             });
             IMapper mapper = config.CreateMapper();

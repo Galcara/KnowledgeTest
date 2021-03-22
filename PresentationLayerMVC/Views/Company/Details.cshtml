@@ -44,7 +44,14 @@
             @Html.DisplayNameFor(model => model.Supplier)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Supplier)
+            @{
+                System.Text.StringBuilder builder = new System.Text.StringBuilder();
+                foreach (var item in Model.Supplier)
+                {
+                    builder.AppendLine(item.PersonResponsible);
+                }
+                <span class="col-sm-10">@builder.ToString()</span>
+            }
         </dd>
     </dl>
 </div>
